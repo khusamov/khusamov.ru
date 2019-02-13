@@ -1,21 +1,12 @@
 import React, {Component} from 'react';
-import {Helmet} from "react-helmet";
-import Menu from '../components/Menu';
+import HomeLayout from '../layouts/HomeLayout';
 
-export default class Index extends Component {
-	title = 'khusamov.ru';
+export default class extends Component {
 	render() {
 		return (
-			<>
-				<Helmet>
-					<title>{this.title}</title>
-				</Helmet>
-
-				<Menu/>
-
-				<h1>{this.title}</h1>
+			<HomeLayout title='khusamov.ru'>
 				<p>Привет!</p>
-			</>
+			</HomeLayout>
 		);
 	}
 }
