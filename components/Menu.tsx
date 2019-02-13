@@ -9,7 +9,7 @@ export default class Menu extends Component {
 				<span> | </span>
 				<Link href='/about'><a>О сайте</a></Link>
 				<span> | </span>
-				<Link href='/post?id=1' as='/post/first'><a>Запись № 1</a></Link>
+				<Link href='/post?id=first' as='/post/first'><a>Запись № 1</a></Link>
 			</>
 		);
 	}
