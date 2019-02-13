@@ -12,13 +12,11 @@ app.prepare().then(() => {
 	const router = new Router();
 
 	router.get('/post/:id', async (ctx: Context) => {
-		await app.render(ctx.req, ctx.res, '/post', ctx.query);
-		ctx.respond = false;
+		await app.render(ctx.req, ctx.res, '/post', ctx.params);
 	});
 
 	router.get('*', async (ctx: Context) => {
 		await handle(ctx.req, ctx.res);
-		ctx.respond = false;
 	});
 
 	server.use(async (ctx: Context, next: Function) => {
