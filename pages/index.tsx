@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Helmet} from "react-helmet";
-import Link from "next/link";
+import Menu from '../components/Menu';
 
 export default class Index extends Component {
 	title = 'khusamov.ru';
@@ -10,9 +10,11 @@ export default class Index extends Component {
 				<Helmet>
 					<title>{this.title}</title>
 				</Helmet>
+
+				<Menu/>
+
 				<h1>{this.title}</h1>
 				<p>Привет!</p>
-				<Link href="/about"><a>О сайте</a></Link>
 			</>
 		);
 	}
