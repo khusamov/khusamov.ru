@@ -1,0 +1,28 @@
+{
+  "name": "khusamov.ru",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "next",
+    "build": "next build",
+    "start": "next start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/khusamov-sites/khusamov.ru.git"
+  },
+  "keywords": [],
+  "author": "Khusamov Sukhrob <khusamov@yandex.ru> (http://khusamov.ru)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/khusamov-sites/khusamov.ru/issues"
+  },
+  "homepage": "https://github.com/khusamov-sites/khusamov.ru#readme",
+  "dependencies": {
+    "next": "^8.0.1",
+    "react": "^16.8.1",
+    "react-dom": "^16.8.1"
+  }
+}
