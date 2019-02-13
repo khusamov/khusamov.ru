@@ -1,13 +1,13 @@
 {
   "name": "khusamov.ru",
   "version": "1.0.0",
-  "description": "",
+  "description": "Личный сайт khusamov.ru",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "next",
+    "dev": "ts-node -P server.tsconfig.json server.ts",
     "build": "next build",
-    "start": "next start"
+    "start": "NODE_ENV=production ts-node -P server.tsconfig.json server.ts"
   },
   "repository": {
     "type": "git",
@@ -21,14 +21,19 @@
   },
   "homepage": "https://github.com/khusamov-sites/khusamov.ru#readme",
   "dependencies": {
+    "@types/koa": "^2.0.48",
+    "@types/koa-router": "^7.0.39",
     "@types/next": "^8.0.0",
     "@types/react": "^16.8.2",
     "@types/react-helmet": "^5.0.8",
     "@zeit/next-sass": "^1.0.1",
     "@zeit/next-typescript": "^1.1.1",
+    "koa": "^2.7.0",
+    "koa-router": "^7.4.0",
     "next": "^8.0.1",
     "react": "^16.8.1",
     "react-dom": "^16.8.1",
-    "react-helmet": "^5.2.0"
+    "react-helmet": "^5.2.0",
+    "typescript": "^3.3.3"
   }
 }
