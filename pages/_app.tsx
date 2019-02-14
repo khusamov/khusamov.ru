@@ -1,6 +1,6 @@
 import App from 'next/app';
 import '../global.scss';
-export default App;
+export default App; // https://nextjs.org/docs#custom-app
 
 // https://github.com/zeit/next.js/issues/5425
 // import React from 'react';
