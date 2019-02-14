@@ -1,15 +1,9 @@
-import React, {Component, FunctionComponent} from 'react';
+import React, {Component} from 'react';
 import RegularLayout from '../layouts/RegularLayout';
 import {withRouter, WithRouterProps} from 'next/router';
 import fetch from 'isomorphic-unfetch';
 import {NextContext} from 'next'; // https://goo.gl/2DTi9G
-
-/**
- * Специальный компонент для вывода HTML-кода без экранирования.
- */
-const Html: FunctionComponent = ({children}) => (
-	<div dangerouslySetInnerHTML={{__html: children as string}}/>
-);
+import Html from '../components/Html';
 
 interface IPostPageQuery {
 	id: string;
