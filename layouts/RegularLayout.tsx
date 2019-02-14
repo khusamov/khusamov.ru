@@ -7,6 +7,7 @@ interface IRegularLayoutProps {
 }
 
 // Вместо Helmet можно заюзать next/head.
+// https://nextjs.org/docs#populating-head
 // https://github.com/zeit/next.js/blob/master/examples/with-typescript/components/Layout.tsx
 
 export default class RegularLayout extends Component<IRegularLayoutProps> {
