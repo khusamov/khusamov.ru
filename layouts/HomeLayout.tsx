@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, Fragment} from 'react';
 import {Helmet} from "react-helmet";
 import Menu from '../components/Menu';
 
@@ -9,7 +9,7 @@ interface IHomeLayoutProps {
 export default class HomeLayout extends Component<IHomeLayoutProps> {
 	render() {
 		return (
-			<>
+			<Fragment>
 				<Helmet>
 					<title>{this.props.title}</title>
 				</Helmet>
@@ -18,7 +18,7 @@ export default class HomeLayout extends Component<IHomeLayoutProps> {
 
 				<h1>{this.props.title}</h1>
 				{this.props.children}
-			</>
+			</Fragment>
 		);
 	}
 }

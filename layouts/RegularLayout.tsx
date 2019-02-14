@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, Fragment} from 'react';
 import {Helmet} from "react-helmet";
 import Menu from '../components/Menu';
 
@@ -12,7 +12,7 @@ interface IRegularLayoutProps {
 export default class RegularLayout extends Component<IRegularLayoutProps> {
 	render() {
 		return (
-			<>
+			<Fragment>
 				<Helmet>
 					<title>{this.props.title}</title>
 				</Helmet>
@@ -21,7 +21,7 @@ export default class RegularLayout extends Component<IRegularLayoutProps> {
 
 				<h1>{this.props.title}</h1>
 				{this.props.children}
-			</>
+			</Fragment>
 		);
 	}
 }
