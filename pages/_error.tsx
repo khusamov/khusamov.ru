@@ -7,23 +7,29 @@ type TStatusCode = keyof HttpStatus;
 
 interface IErrorProps {
 	statusCode: TStatusCode;
+	uri: string;
 }
 
 export default class ErrorPage extends Component<IErrorProps> {
-	static getInitialProps({res, err}: NextContext): IErrorProps {
+	public static getInitialProps({req, res, err}: NextContext): IErrorProps {
 		const statusCode: TStatusCode = (
 			res && res.statusCode
 				? res.statusCode
 				// Не ясно откуда в err берется statusCode. И почему его нет в NextContext.
 				: err ? (err as any).statusCode : 404
 		);
-		return {statusCode};
+		const uri: string = (
+			req
+				? (req.url ? req.url : '')
+				: location.href
+		);
+		return {statusCode, uri};
 	}
-	render() {
-		const {statusCode} = this.props;
+	public render() {
+		const {statusCode, uri} = this.props;
 		const title: string = (
 			statusCode === 404
-				? 'Эта страница не найдена'
+				? `Страница ${uri} не найдена`
 				: (
 					statusCode in HttpStatus
 						? String(HttpStatus[statusCode])
