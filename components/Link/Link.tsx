@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, Children, ReactNode} from 'react';
 import NextLink, {LinkProps as NextLinkProps} from 'next/link';
 import {withRouter, WithRouterProps} from 'next/router';
 
@@ -39,12 +39,29 @@ const Link = withRouter(
 			return nextLinkProps;
 		}
 
+		private get isActive(): boolean {
+			return this.props.router ? this.props.router.pathname === this.props.href : false;
+		}
+
 		public render() {
-			return (
-				this.props.router && this.props.router.pathname === this.props.href
-					? this.props.children
-					: <NextLink {...LinkWithoutRouter.filterNextLinkProps(this.props)}>{this.props.children}</NextLink>
-			);
+			let result: ReactNode;
+			const child = Children.only(this.props.children);
+
+			if (this.isActive) {
+				// Если ссылка активна, то в класс дочернего элемента добавляем active.
+				result = React.cloneElement(child, {
+					...child.props,
+					className: [child.props.className, 'active'].filter(cn => cn).join(' ')
+				});
+			} else {
+				result = (
+					<NextLink {...LinkWithoutRouter.filterNextLinkProps(this.props)}>
+						{child}
+					</NextLink>
+				);
+			}
+
+			return result;
 		}
 	}
 );
