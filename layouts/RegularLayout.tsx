@@ -1,6 +1,7 @@
 import React, {Component, Fragment} from 'react';
 import {Helmet} from "react-helmet";
 import Menu from '../components/Menu';
+import Logotype from '../components/Logotype';
 
 interface IRegularLayoutProps {
 	title: string;
@@ -11,13 +12,14 @@ interface IRegularLayoutProps {
 // https://github.com/zeit/next.js/blob/master/examples/with-typescript/components/Layout.tsx
 
 export default class RegularLayout extends Component<IRegularLayoutProps> {
-	render() {
+	public render() {
 		return (
 			<Fragment>
 				<Helmet>
 					<title>{this.props.title}</title>
 				</Helmet>
 
+				<Logotype/>
 				<Menu/>
 
 				<h1>{this.props.title}</h1>

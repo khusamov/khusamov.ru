@@ -1,15 +1,16 @@
 import React, {Component} from 'react';
 import {Helmet} from "react-helmet";
-import Menu from '../components/Menu';
+import Menu from '../../components/Menu';
+import Logotype from '../../components/Logotype';
+import {version} from '../../package.json';
 import css from './HomeLayout.scss';
-import {version} from '../package.json';
 
 interface IHomeLayoutProps {
 	title: string;
 }
 
 export default class HomeLayout extends Component<IHomeLayoutProps> {
-	render() {
+	public render() {
 		const siteVersionText = `Версия сайта: ${version}`;
 		return (
 			<div className={css.HomeLayout}>
@@ -17,9 +18,9 @@ export default class HomeLayout extends Component<IHomeLayoutProps> {
 					<title>{this.props.title}</title>
 				</Helmet>
 
+				<Logotype/>
 				<Menu/>
 
-				<h1>{this.props.title}</h1>
 				<p>{siteVersionText}</p>
 				{this.props.children}
 			</div>
