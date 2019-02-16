@@ -1,0 +1,10 @@
+.Menu {
+	display: flex;
+	.item {
+		flex: 1 1 auto;
+		background-color: #0089ff;
+		padding: 10px 30px;
+		color: white;
+		text-align: center;
+	}
+}
