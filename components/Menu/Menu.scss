@@ -6,5 +6,11 @@
 		padding: 10px 30px;
 		color: white;
 		text-align: center;
+		&:hover {
+			background-color: #219aff;
+		}
+		&:global(.active) {
+			background-color: #00336a;
+		}
 	}
 }
