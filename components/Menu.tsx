@@ -19,8 +19,8 @@ export default class Menu extends Component {
 	}];
 	render() {
 		return this.items.map(({title, uri}, index) => (
-			<Fragment>
-				<Link key={index} href={uri}>
+			<Fragment key={index}>
+				<Link href={uri}>
 					<a>{title}</a>
 				</Link>
 				{
