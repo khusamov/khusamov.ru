@@ -1,5 +1,24 @@
 @import url('https://fonts.googleapis.com/css?family=PT+Serif');
 
+html {
+	margin: 0;
+	padding: 0;
+	height: 100%;
+
+	// Хак для браузера Сафари. Белый цвет для низа страницы, а синий цвет - для верха.
+	// @link https://goo.gl/KMEJDv
+	background: linear-gradient(white, #0089ff);
+}
+
 body {
-	font-family: 'PT Serif', Courier, 'Noto Serif SC', serif;
+	font-family: 'PT Serif', serif;
+	margin: 0;
+	padding: 0;
+	background-color: white;
+	height: 100%;
+}
+
+h1 {
+	font-weight: normal;
+	font-size: 48px;
 }
