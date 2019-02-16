@@ -1,0 +1,19 @@
+.Logotype {
+	display: flex;
+	justify-content: center;
+	background-color: #0089ff;
+	padding: 5px 0;
+	a {
+		font-family: 'Stalinist One', cursive;
+		//font-family: 'Oswald', sans-serif;
+
+		color: #7bc0ff;
+		text-transform: uppercase;
+		text-decoration: none;
+		font-size: 150%;
+		padding: 5px 20px;
+		:active {
+
+		}
+	}
+}
