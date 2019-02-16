@@ -7,23 +7,23 @@ interface IItem {
 	uri: string;
 }
 
-export default class Menu extends Component {
-	private items: IItem[] = [{
-		title: 'Новое',
-		uri: '/'
-	}, {
-		title: 'Слово о сайте',
-		uri: '/about'
-	}, {
-		title: 'Инструмент',
-		uri: '/tool'
-	}];
+const menuItems: IItem[] = [{
+	title: 'Новое',
+	uri: '/'
+}, {
+	title: 'Слово о сайте',
+	uri: '/about'
+}, {
+	title: 'Инструмент',
+	uri: '/tool'
+}];
 
+export default class Menu extends Component {
 	public render() {
 		return (
 			<div className={css.Menu}>
 				{
-					this.items.map(({title, uri}, index) => (
+					menuItems.map(({title, uri}, index) => (
 						<Fragment key={index}>
 							<Link href={uri}>
 								<a className={css.item}>{title}</a>
