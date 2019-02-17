@@ -16,6 +16,9 @@ const menuItems: IItem[] = [{
 }, {
 	title: 'Инструмент',
 	uri: '/tool'
+}, {
+	title: 'Тетрис',
+	uri: '/tetris'
 }];
 
 export default class Menu extends Component {
