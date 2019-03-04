@@ -21,7 +21,7 @@ app.prepare().then(() => {
 		await handle(ctx.req, ctx.res);
 	});
 
-	server.use(async (ctx: Context, next: Function) => {
+	server.use(async (ctx: Context, next: TKoaNextFunction) => {
 		ctx.res.statusCode = 200;
 		await next();
 	});
