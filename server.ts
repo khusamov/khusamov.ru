@@ -4,17 +4,20 @@ import Next from 'next';
 
 type TKoaNextFunction = () => Promise<any>;
 
-const port = process.env.PORT ? parseInt(process.env.PORT, 10) || 3000 : 3000;
-const dev = process.env.NODE_ENV !== 'production';
-const app = Next({ dev });
-const handle = app.getRequestHandler();
+const defaultPort = 3000;
+const port = process.env.PORT ? parseInt(process.env.PORT, 10) || defaultPort : defaultPort;
+const isDevelopment = process.env.NODE_ENV !== 'production';
+const nextApplication = Next({dev: isDevelopment});
 
-app.prepare().then(() => {
+(async () => {
+	await nextApplication.prepare();
+
 	const server = new Koa();
 	const router = new Router();
+	const handle = nextApplication.getRequestHandler();
 
 	router.get('/post/:id', async (ctx: Context) => {
-		await app.render(ctx.req, ctx.res, '/post', ctx.params);
+		await nextApplication.render(ctx.req, ctx.res, '/post', ctx.params);
 	});
 
 	router.get('*', async (ctx: Context) => {
@@ -28,6 +31,6 @@ app.prepare().then(() => {
 
 	server.use(router.routes());
 	server.listen(port, () => {
-		console.log(`> Ready on http://localhost:${port}`)
+		console.log(`> Next Application ready on 'http://localhost:${port}'.`)
 	});
-});
+})();
