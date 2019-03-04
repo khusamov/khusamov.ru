@@ -2,6 +2,8 @@ import Koa, {Context} from 'koa';
 import Router from 'koa-router';
 import Next from 'next';
 
+type TKoaNextFunction = () => Promise<any>;
+
 const port = process.env.PORT ? parseInt(process.env.PORT, 10) || 3000 : 3000;
 const dev = process.env.NODE_ENV !== 'production';
 const app = Next({ dev });
