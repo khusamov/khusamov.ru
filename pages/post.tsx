@@ -17,7 +17,7 @@ type TPostPageProps = IPostPageProps & WithRouterProps<IPostPageQuery>;
 
 const PostPage = withRouter(
 	class extends Component<TPostPageProps> {
-		static async getInitialProps(context: NextContext): Promise<IPostPageProps> {
+		public static async getInitialProps(context: NextContext): Promise<IPostPageProps> {
 			const {id} = context.query;
 			const batmanShowsResponse = await fetch(`https://api.tvmaze.com/shows/${id}`);
 			const batmanShow = await batmanShowsResponse.json();
@@ -32,7 +32,7 @@ const PostPage = withRouter(
 			);
 		}
 
-		render() {
+		public render() {
 			return (
 				<RegularLayout title={this.title}>
 					<Html>{this.props.batmanShow.summary}</Html>
