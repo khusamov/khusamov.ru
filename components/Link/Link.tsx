@@ -13,32 +13,32 @@ const TNextLinkPropKeys: Array<keyof NextLinkProps> = [
 ];
 
 /**
+ * В компонент NextLink пропускаем только пропсы из NextLinkProps.
+ * Иными словами, пропсы WithRouterProps отфильтровываем.
+ * Эти исключает предупреждение вида:
+ * Warning: Failed prop type: Link: unknown props found: router.
+ * @param linkProps
+ */
+function filterNextLinkProps(linkProps: TLinkProps): NextLinkProps {
+	const nextLinkProps: NextLinkProps = {children: linkProps.children};
+	let prop: keyof TLinkProps;
+	for (prop in linkProps) {
+		if (
+			linkProps.hasOwnProperty(prop)
+			&& TNextLinkPropKeys.indexOf(prop as keyof NextLinkProps) !== -1
+		) {
+			nextLinkProps[prop as keyof NextLinkProps] = linkProps[prop];
+		}
+	}
+	return nextLinkProps;
+}
+
+/**
  * Замена штатного next/link на свой компонент Link,
  * который убирает ссылку, если href совпадает с текущим URL.
  */
 const Link = withRouter(
 	class LinkWithoutRouter extends Component<TLinkProps> {
-		/**
-		 * В компонент NextLink пропускаем только пропсы из NextLinkProps.
-		 * Иными словами, пропсы WithRouterProps отфильтровываем.
-		 * Эти исключает предупреждение вида:
-		 * Warning: Failed prop type: Link: unknown props found: router.
-		 * @param linkProps
-		 */
-		private static filterNextLinkProps(linkProps: TLinkProps): NextLinkProps {
-			const nextLinkProps: NextLinkProps = {children: linkProps.children};
-			let prop: keyof TLinkProps;
-			for (prop in linkProps) {
-				if (
-					linkProps.hasOwnProperty(prop)
-					&& TNextLinkPropKeys.indexOf(prop) !== -1
-				) {
-					nextLinkProps[prop as keyof NextLinkProps] = linkProps[prop];
-				}
-			}
-			return nextLinkProps;
-		}
-
 		private get isActive(): boolean {
 			return this.props.router ? this.props.router.pathname === this.props.href : false;
 		}
@@ -55,7 +55,7 @@ const Link = withRouter(
 				});
 			} else {
 				result = (
-					<NextLink {...LinkWithoutRouter.filterNextLinkProps(this.props)}>
+					<NextLink {...filterNextLinkProps(this.props)}>
 						{child}
 					</NextLink>
 				);
