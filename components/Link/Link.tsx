@@ -7,7 +7,7 @@ type TLinkProps = WithRouterProps & NextLinkProps;
 /**
  * Перечень ключей интерфейса NextLinkProps.
  */
-const TNextLinkPropKeys = [
+const TNextLinkPropKeys: Array<keyof NextLinkProps> = [
 	'prefetch', 'shallow', 'scroll', 'replace',
 	'href', 'as', 'passHref', 'children'
 ];
