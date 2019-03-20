@@ -25,7 +25,7 @@ module.exports = withTypescript(withCSS(withSass({
 	webpack(config, options) {
 		config.module.rules.push({
 			test: /\.md$/,
-			loader: './markdown-loader'
+			loader: './loaders/markdown-loader'
 
 		});
 		return config;
