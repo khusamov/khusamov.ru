@@ -1,4 +1,6 @@
 const BabelCore = require('@babel/core');
+const Fs = require('fs');
+const Path = require('path');
 
 /**
  * Загрузчик Markdown-файла как React-компонента.
@@ -18,46 +20,9 @@ module.exports = function(source) {
 	// Экранирование обратных кавычек.
 	const safeString = source.replace(/`/g, '\\`');
 
-	// Создание Markdown-компонента.
-	const component = `
-		React.createElement(
-			'section',
-			{
-				dangerouslySetInnerHTML: {
-					__html: markdownRenderer.render(
-						Mustache.render(
-							\`${safeString}\`,
-							props.context || {}
-						)
-					)
-				},
-				...props
-			},
-			null
-		)
-	`;
-
-	const module = `
-		const React = require('react');
-		const Mustache = require('mustache');
-		
-		const hljs = require('highlight.js');
-		
-		const markdownRenderer = require('markdown-it')({
-			highlight(str, lang) {
-				if (lang && hljs.getLanguage(lang)) {
-					try {
-						return hljs.highlight(lang, str).value;
-					} catch (__) {}
-				}
-				return ''; // use external default escaping
-			}
-		});
-		
-		//markdownRenderer.use(require('markdown-it-highlightjs'));
-		
-		module.exports = function(props) { return (${component}); };
-	`;
+	// Создание модуля с компонентом.
+	const fileContent = Fs.readFileSync(Path.join(__dirname, 'Section.js'), 'utf8');
+	const module = fileContent.replace('MARKDOWN_SOURCE', safeString);
 
 	return BabelCore.transformSync(module, {presets: ['@babel/preset-env']}).code;
 };
