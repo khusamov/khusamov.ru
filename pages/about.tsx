@@ -5,7 +5,7 @@ import Article1 from '../articles/article1.md';
 export default class extends Component {
 	public render() {
 		return (
-			<RegularLayout title='Слово о сайте khusamov.ru'>
+			<RegularLayout title={Article1.title}>
 				<Article1 />
 			</RegularLayout>
 		);
