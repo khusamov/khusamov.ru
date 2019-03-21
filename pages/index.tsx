@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, Fragment} from 'react';
 import HomeLayout from '../layouts/HomeLayout';
 import fetch from 'isomorphic-unfetch';
 import Link from 'next/link';
@@ -14,17 +14,22 @@ export default class IndexPage extends Component<IIndexPageProps> {
 		return {batmanShows};
 	}
 	public render() {
+
+		// Внимание, внутри <p> нельзя вставлять <div>, иначе в консоли будет выдано предупреждение:
+		// Warning: validateDOMNesting(...): <div> cannot appear as a descendant of <p>.
+
 		return (
 			<HomeLayout title='khusamov.ru'>
 				<p>Batman Shows:</p>
 				<p>
 					{
 						this.props.batmanShows.map((item: any, index: number) => (
-							<div key={index}>
+							<Fragment key={index}>
 								<Link href={`/post?id=${item.show.id}`} as={`/post/${item.show.id}`}>
 									<a>{item.show.name}</a>
 								</Link>
-							</div>
+								<br/>
+							</Fragment>
 						))
 					}
 				</p>
