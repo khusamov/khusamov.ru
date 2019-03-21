@@ -18,18 +18,10 @@ const h1 = h1match[1];
 // Удалить тег h1.
 html = html.replace(h1reg, '');
 
-const Article = function(props) {
+const Article = props => {
 	const __html = Mustache.render(html, props.context || {});
-	return (
-		React.createElement(
-			'section',
-			{
-				dangerouslySetInnerHTML: {__html},
-				...props
-			},
-			null
-		)
-	);
+	const sectionProps = {...props, dangerouslySetInnerHTML: {__html}};
+	return React.createElement('section', sectionProps, null);
 };
 
 Article.title = h1;
