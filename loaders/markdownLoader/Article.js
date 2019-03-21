@@ -1,18 +1,35 @@
 const React = require('react');
 const Mustache = require('mustache');
 const MarkdownIt = require('markdown-it');
+const MarkdownItAnchor = require('markdown-it-anchor');
 const HighlightJavaScript = require('highlight.js');
+
+// https://github.com/valeriangalliat/markdown-it-anchor/blob/HEAD/index.js#L1
+const slugify = s => encodeURIComponent(String(s).trim().toLowerCase().replace(/\s+/g, '-'));
 
 const markdownRenderer = createMarkdownRenderer();
 
 let html = markdownRenderer.render(`MARKDOWN_SOURCE`);
 
 // Регулярка для отлова тега h1.
-const h1reg = /<h1>(.*)<\/h1>/;
+const h1reg = /<h1.*?>(.*)<\/h1>/;
+const h2reg = /<h2.*?>(.*?)<\/h2>/g;
 
 // Найти значение тега h1 (это нужно делать до удаления тега h1).
 const h1match = html.match(h1reg);
-const h1 = h1match[1];
+const h1 = h1match ? h1match[1] : '';
+
+// Поиск всех h2.
+let htmlH2SearchResult = h2reg.exec(html);
+const h2list = [];
+while (htmlH2SearchResult) {
+	h2list.push({
+		id: slugify(htmlH2SearchResult[1]),
+		uri: '#' + slugify(htmlH2SearchResult[1]),
+		title: htmlH2SearchResult[1]
+	});
+	htmlH2SearchResult = h2reg.exec(html);
+}
 
 // Удалить тег h1.
 html = html.replace(h1reg, '');
@@ -24,6 +41,7 @@ const Article = props => {
 };
 
 Article.title = h1;
+Article.toc = h2list;
 
 module.exports = Article;
 
@@ -33,6 +51,7 @@ module.exports = Article;
 function createMarkdownRenderer() {
 	const markdownRenderer = MarkdownIt();
 	markdownRenderer.use(markdownItHighlightJavaScriptCustom);
+	markdownRenderer.use(MarkdownItAnchor);
 	return markdownRenderer;
 }
 
