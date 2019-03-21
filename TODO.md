@@ -1,6 +1,17 @@
 TODO
 ====
 
+Возможность вести блог
+---------------------
+
+https://www.artlebedev.ru/technogrette/xslt/entity-3/
+
+Для примера сделать
+https://nextjs.org/docs/#populating-head
+
+Убрать Warning: Prop dangerouslySetInne...
+------------------------------------------
+
 Устранить вывод предупреждения:
 > Warning: Prop `dangerouslySetInnerHTML` did not match. Server:...
 
