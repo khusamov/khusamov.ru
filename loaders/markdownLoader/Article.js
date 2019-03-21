@@ -1,8 +1,7 @@
 const React = require('react');
 const Mustache = require('mustache');
-const HighlightJavaScript = require('highlight.js');
 const MarkdownIt = require('markdown-it');
-const MarkdownItHighlightJavaScript = require('markdown-it-highlightjs');
+const HighlightJavaScript = require('highlight.js');
 
 const markdownRenderer = createMarkdownRenderer();
 

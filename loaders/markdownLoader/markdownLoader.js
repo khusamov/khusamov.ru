@@ -1,6 +1,6 @@
-const BabelCore = require('@babel/core');
 const Fs = require('fs');
 const Path = require('path');
+const BabelCore = require('@babel/core');
 
 /**
  * Загрузчик Markdown-файла как React-компонента.
@@ -19,13 +19,13 @@ const Path = require('path');
  * @link https://www.npmjs.com/package/markdown-it-highlight
  * @param source
  */
-module.exports = function(source) {
+module.exports = function markdownLoader(source) {
 	// Экранирование обратных кавычек.
 	const safeString = source.replace(/`/g, '\\`');
 
 	// Создание модуля с компонентом.
-	const fileContent = Fs.readFileSync(Path.join(__dirname, 'Article.js'), 'utf8');
-	const module = fileContent.replace('MARKDOWN_SOURCE', safeString);
+	const articleFileContent = Fs.readFileSync(Path.join(__dirname, 'Article.js'), 'utf8');
+	const module = articleFileContent.replace('MARKDOWN_SOURCE', safeString);
 
 	return BabelCore.transformSync(module, {presets: ['@babel/preset-env']}).code;
 };
