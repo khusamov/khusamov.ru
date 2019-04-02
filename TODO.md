@@ -26,3 +26,13 @@ https://github.com/ccampbell/rainbow
 https://prismjs.com/  
 Найти такой, который одинаково будет работать как на сервере, 
 так и на клиенте.
+
+Сайт как модуль
+---------------
+
+Директорию, где хранится сборка, можно менять опцией `distDir` в файле `next.config.js`. 
+В свою очередь конфигурацию Next из файла `next.config.js` можно хранить 
+в файле `server.js` (в одной из опций при создании nextApplication).
+https://github.com/zeit/next.js#setting-a-custom-build-directory
+Таким образом при запуске prepare можно указать директорию, откуда брать Next-проект, 
+и директорию, где располагать сборку.  
