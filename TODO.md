@@ -21,7 +21,7 @@ https://nextjs.org/docs/#populating-head
 функция HighlightJavaScript.highlightAuto()
 выдает разные значения на клиенте и сервере.
 
-Для этого можно попробовать другие отрисовщики Markdown:  
+Для этого можно попробовать другие отрисовщики подсветки кода:  
 https://github.com/ccampbell/rainbow  
 https://prismjs.com/  
 Найти такой, который одинаково будет работать как на сервере, 
