@@ -1,17 +1,18 @@
 const Base64 = require('base-64');
-const withCSS = require('@zeit/next-css');
 const withSass = require('@zeit/next-sass');
-const withTypescript = require('@zeit/next-typescript');
+const withCSS = require('@zeit/next-css');
 
 /**
  * Конфигурация Next.
  * @link https://github.com/zeit/next.js#custom-configuration
  */
-module.exports = withTypescript(withCSS(withSass({
-	cssLoaderOptions: {getLocalIdent, importLoaders: 1},
-	cssModules: true,
-	webpack: webpackHandler
-})));
+module.exports = (
+	withCSS(withSass({
+		cssLoaderOptions: {getLocalIdent, importLoaders: 1},
+		cssModules: true,
+		webpack: webpackHandler
+	}))
+);
 
 /**
  * Изменение конфигурации Webpack.

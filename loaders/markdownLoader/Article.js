@@ -3,6 +3,7 @@ const Mustache = require('mustache');
 const MarkdownIt = require('markdown-it');
 const MarkdownItAnchor = require('markdown-it-anchor');
 const HighlightJavaScript = require('highlight.js');
+import TypeScriptHighlight from 'highlight.js/lib/languages/typescript';
 
 // https://github.com/valeriangalliat/markdown-it-anchor/blob/HEAD/index.js#L1
 const slugify = s => encodeURIComponent(String(s).trim().toLowerCase().replace(/\s+/g, '-'));
@@ -74,7 +75,8 @@ function markdownItHighlightJavaScriptCustom(md) {
 }
 
 function highlight(library, text, language) {
-	return `<pre><code class='hljs'>${highlightAuto(text, [language])}</code></pre>`;
+	const languageSubset = language.split(' ').map(lang => lang.trim());
+	return `<pre><code class='hljs ${language}'>${highlightAuto(text, languageSubset)}</code></pre>`;
 }
 
 /**
@@ -84,17 +86,23 @@ function highlight(library, text, language) {
  */
 function highlightAuto(text, languageSubset) {
 	const tabReplace = '   ';
+
+	// Настройка замены табуляции. Внимание, на стороне клиента эта настройка почему-то не работает.
 	HighlightJavaScript.configure({tabReplace});
 
+	HighlightJavaScript.registerLanguage('typescript', TypeScriptHighlight);
+
 	if (process.browser) {
-		// Функция initHighlighting() не работает на стороне браузера (т.к. зависит от document).
+		// Функция initHighlighting() зависит от браузерного объекта document
+		// и поэтому работает только на стороне клиенте.
 		HighlightJavaScript.initHighlighting();
 	}
 
 	let highlightedCode = HighlightJavaScript.highlightAuto(text, languageSubset).value;
 
-	if (!process.browser) {
-		// На стороне сервера придется менять символы табуляции на пробелы при помощи String.replace().
+	if (process.browser) {
+		// На стороне клиента символы табуляции меняем на пробелы при помощи String.replace(),
+		// потому что опция tabReplace на стороне клиента не работает.
 		highlightedCode = highlightedCode.replace(/\t/g, tabReplace);
 	}
 

@@ -1,15 +1,19 @@
-import React, {Component, Children, ReactNode} from 'react';
+import React, {Component, Children, ReactNode, ReactElement} from 'react';
 import NextLink, {LinkProps as NextLinkProps} from 'next/link';
-import {withRouter, WithRouterProps} from 'next/router';
+import {withRouter, NextRouter} from 'next/router';
 
-type TLinkProps = WithRouterProps & NextLinkProps;
+interface IWithRouterProps {
+	router: NextRouter;
+}
+
+type TLinkProps = IWithRouterProps & NextLinkProps;
 
 /**
  * Перечень ключей интерфейса NextLinkProps.
  */
-const TNextLinkPropKeys: Array<keyof NextLinkProps> = [
+const nextLinkPropKeys: Array<keyof NextLinkProps> = [
 	'prefetch', 'shallow', 'scroll', 'replace',
-	'href', 'as', 'passHref', 'children'
+	'href', 'as', 'passHref'
 ];
 
 /**
@@ -20,14 +24,14 @@ const TNextLinkPropKeys: Array<keyof NextLinkProps> = [
  * @param linkProps
  */
 function filterNextLinkProps(linkProps: TLinkProps): NextLinkProps {
-	const nextLinkProps: NextLinkProps = {children: linkProps.children};
+	const nextLinkProps: NextLinkProps = {href: linkProps.href};
 	let prop: keyof TLinkProps;
 	for (prop in linkProps) {
 		if (
 			linkProps.hasOwnProperty(prop)
-			&& TNextLinkPropKeys.indexOf(prop as keyof NextLinkProps) !== -1
+			&& nextLinkPropKeys.indexOf(prop as keyof NextLinkProps) !== -1
 		) {
-			nextLinkProps[prop as keyof NextLinkProps] = linkProps[prop];
+			nextLinkProps[prop] = linkProps[prop];
 		}
 	}
 	return nextLinkProps;
@@ -37,33 +41,31 @@ function filterNextLinkProps(linkProps: TLinkProps): NextLinkProps {
  * Замена штатного next/link на свой компонент Link,
  * который убирает ссылку, если href совпадает с текущим URL.
  */
-const Link = withRouter(
-	class LinkWithoutRouter extends Component<TLinkProps> {
+export default withRouter(
+	class Link extends Component<TLinkProps> {
 		private get isActive(): boolean {
 			return this.props.router ? this.props.router.pathname === this.props.href : false;
 		}
 
 		public render() {
-			let result: ReactNode;
-			const child = Children.only(this.props.children);
-
-			if (this.isActive) {
-				// Если ссылка активна, то в класс дочернего элемента добавляем active.
-				result = React.cloneElement(child, {
-					...child.props,
-					className: [child.props.className, 'active'].filter(cn => cn).join(' ')
-				});
-			} else {
-				result = (
-					<NextLink {...filterNextLinkProps(this.props)}>
-						{child}
-					</NextLink>
-				);
-			}
-
-			return result;
+			const child: ReactElement = Children.only(this.props.children) as ReactElement;
+			// По идее здесь надо сделать проверку, а действительно ли child является ReactElement-ом. Так как children
+			// содержит ReactNode, который имеет несколько вариантов кроме ReactElement. Но как сделать эту проверку?
+			return (
+				this.isActive
+					? (
+						// Если ссылка активна, то в класс дочернего элемента добавляем active.
+						React.cloneElement(child, {
+							...child.props,
+							className: [child.props.className, 'active'].filter(cn => cn).join(' ')
+						})
+					)
+					: (
+						<NextLink {...filterNextLinkProps(this.props)}>
+							{child}
+						</NextLink>
+					)
+			);
 		}
 	}
 );
-
-export default Link;

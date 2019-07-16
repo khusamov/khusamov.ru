@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {NextContext} from 'next';
+import {NextPageContext} from 'next';
 import HttpStatus from 'http-status';
 import ErrorLayout from '../layouts/ErrorLayout';
 
@@ -11,12 +11,11 @@ interface IErrorProps {
 }
 
 export default class ErrorPage extends Component<IErrorProps> {
-	public static getInitialProps({req, res, err}: NextContext): IErrorProps {
+	public static getInitialProps({req, res, err}: NextPageContext): IErrorProps {
 		const statusCode: TStatusCode = (
 			res && res.statusCode
-				? res.statusCode
-				// Не ясно откуда в err берется statusCode. И почему его нет в NextContext.
-				: err ? (err as any).statusCode : 404
+				? res.statusCode as TStatusCode
+				: err ? err.statusCode as TStatusCode : 404
 		);
 		const uri: string = (
 			req

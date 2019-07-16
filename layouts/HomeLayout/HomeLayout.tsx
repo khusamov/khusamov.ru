@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
-import {Helmet} from "react-helmet";
+import Head from 'next/head';
+import {version} from '../../package.json';
 import Menu from '../../components/Menu';
 import Logotype from '../../components/Logotype';
-import {version} from '../../package.json';
 import css from './HomeLayout.scss';
 
 interface IHomeLayoutProps {
@@ -14,9 +14,9 @@ export default class HomeLayout extends Component<IHomeLayoutProps> {
 		const siteVersionText = `Версия сайта: ${version}`;
 		return (
 			<div className={css.HomeLayout}>
-				<Helmet>
+				<Head>
 					<title>{this.props.title}</title>
-				</Helmet>
+				</Head>
 
 				<Logotype/>
 				<Menu/>

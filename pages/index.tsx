@@ -1,11 +1,28 @@
-import React, {Component, Fragment} from 'react';
-import HomeLayout from '../layouts/HomeLayout';
+import React, {Component, FC, ClassAttributes, Fragment} from 'react';
 import fetch from 'isomorphic-unfetch';
 import Link from 'next/link';
+import HomeLayout from '../layouts/HomeLayout';
+
+interface IBatmanShow {
+	show: {
+		id: number;
+		name: string;
+	}
+}
 
 interface IIndexPageProps {
-	batmanShows: any[];
+	batmanShows: IBatmanShow[];
 }
+
+interface IBatmanShowLinkProps extends ClassAttributes<any> {
+	item: IBatmanShow;
+}
+
+const BatmanShowLink: FC<IBatmanShowLinkProps> = props => (
+	<Link href={`/post?id=${props.item.show.id}`} as={`/post/${props.item.show.id}`}>
+		<a>{props.item.show.name}</a>
+	</Link>
+);
 
 export default class IndexPage extends Component<IIndexPageProps> {
 	public static async getInitialProps(): Promise<IIndexPageProps> {
@@ -13,11 +30,8 @@ export default class IndexPage extends Component<IIndexPageProps> {
 		const batmanShows = await batmanShowsResponse.json();
 		return {batmanShows};
 	}
+
 	public render() {
-
-		// Внимание, внутри <p> нельзя вставлять <div>, иначе в консоли будет выдано предупреждение:
-		// Warning: validateDOMNesting(...): <div> cannot appear as a descendant of <p>.
-
 		return (
 			<HomeLayout title='khusamov.ru'>
 				<p>Batman Shows:</p>
@@ -25,9 +39,7 @@ export default class IndexPage extends Component<IIndexPageProps> {
 					{
 						this.props.batmanShows.map((item: any, index: number) => (
 							<Fragment key={index}>
-								<Link href={`/post?id=${item.show.id}`} as={`/post/${item.show.id}`}>
-									<a>{item.show.name}</a>
-								</Link>
+								<BatmanShowLink item={item}/>
 								<br/>
 							</Fragment>
 						))
