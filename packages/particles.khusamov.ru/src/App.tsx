@@ -48,7 +48,7 @@ const App: React.FC = () => {
 			<h1>khusamov.ru</h1>
 			<div>ВКонтакте: <a href='https://vk.com/crystalset'>https://vk.com/crystalset</a></div>
 			<div>GitHub: <a href='https://github.com/khusamov'>https://github.com/khusamov</a></div>
-			<div>Скайп: <a href='skype:khusamov.ru'>khusamov.ru</a></div>
+			<div>Скайп: <a href='skype:khusamov'>khusamov</a></div>
 
 			<br/>
 			<div>Мои микроблоги:</div>
