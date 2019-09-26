@@ -1,4 +1,4 @@
-import React, {CSSProperties} from 'react';
+import React, {Component, CSSProperties} from 'react';
 import './App.scss';
 import Particles, {IParticlesParams} from 'react-particles-js';
 import config from './particlesjs-config.json';
@@ -28,7 +28,6 @@ const blogs = [{
 	url: 'https://vk.com/sencha_extjs'
 }];
 
-
 const footerStyle: CSSProperties = {
 	position: 'absolute',
 	bottom: 0,
@@ -38,27 +37,39 @@ const footerStyle: CSSProperties = {
 	fontSize: '80%'
 };
 
-const App: React.FC = () => {
-	return (
-		<div className="App">
-			<Helmet>
-				<title>khusamov.ru</title>
-			</Helmet>
-			<Particles style={{position: 'absolute', top: 0, bottom: 0, left: 0, right: 0, zIndex: -1}} params={config as IParticlesParams}/>
-			<h1>khusamov.ru</h1>
-			<div>ВКонтакте: <a href='https://vk.com/crystalset'>https://vk.com/crystalset</a></div>
-			<div>GitHub: <a href='https://github.com/khusamov'>https://github.com/khusamov</a></div>
-			<div>Скайп: <a href='skype:khusamov'>khusamov</a></div>
-
-			<br/>
-			<div>Мои микроблоги:</div>
-			{blogs.map(blog => <div><a target='_blank' href='{blog.url}'>{blog.name}</a></div>)}
-
-			<div style={footerStyle}>
-				Версия сайта {packageJson.version}
-			</div>
-		</div>
-	);
+const particlesStyle: CSSProperties = {
+	position: 'absolute',
+	top: 0,
+	bottom: 0,
+	left: 0,
+	right: 0,
+	zIndex: -1
 };
 
-export default App;
+export default class App extends Component {
+	render() {
+		return (
+			<div className="App">
+				<Helmet>
+					<title>khusamov.ru</title>
+				</Helmet>
+
+				<Particles style={particlesStyle} params={config as IParticlesParams}/>
+
+				<h1>khusamov.ru</h1>
+				<div>ВКонтакте: <a href='https://vk.com/crystalset' target='_blank'>crystalset</a></div>
+				<div>GitHub: <a href='https://github.com/khusamov' target='_blank'>khusamov</a></div>
+				<div>Скайп: <a href='skype:khusamov'>khusamov</a></div>
+				<div>Почта: <a href='mailto:khusamov@yandex.ru'>khusamov@yandex.ru</a></div>
+				<div>Телефон: <a href='tel:+79653911487'>+7 (965) 391-14-87</a></div>
+				<div>Адрес: Россия, Москва, район Гольяново</div>
+
+				<br/>
+				<div>Мои микроблоги:</div>
+				{blogs.map(blog => <div><a href={blog.url} target='_blank'>{blog.name}</a></div>)}
+
+				<div style={footerStyle}>Версия сайта {packageJson.version}</div>
+			</div>
+		);
+	}
+};
