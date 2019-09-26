@@ -55,9 +55,9 @@ export const sshConfig = {
 };
 
 export const deployConfig = {
-	'svg-path-length-client': {
-		localDir: 'packages/svg-path-length-client/build',
-		remoteDir: '/var/www/khusamov/data/www/svg-path-length.khusamov.ru'
+	'particles.khusamov.ru': {
+		localDir: 'packages/particles.khusamov.ru/build',
+		remoteDir: '/var/www/khusamov/data/www/khusamov.ru'
 	}
 };
 ```

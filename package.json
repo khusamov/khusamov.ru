@@ -5,9 +5,9 @@
     "packages/*"
   ],
   "scripts": {
-    "deploy-and-build": "npm run build:client && npm run deploy",
-    "deploy": "ts-node --project deploy/tsconfig.json deploy",
-    "build:client": "lerna run build --scope=svg-path-length-client"
+    "build:particles.khusamov.ru": "lerna run build --scope=particles.khusamov.ru",
+    "deploy:particles.khusamov.ru": "ts-node --project deploy/tsconfig.json deploy --scope=particles.khusamov.ru",
+    "build-and-deploy:particles.khusamov.ru": "npm run build:particles.khusamov.ru && npm run deploy:particles.khusamov.ru"
   },
   "devDependencies": {
     "lerna": "^3.13.1",
