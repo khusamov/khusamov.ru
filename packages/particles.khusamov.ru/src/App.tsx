@@ -24,7 +24,7 @@ const blogs = [{
 	name: 'TypeScript',
 	url: 'https://vk.com/mytypescript'
 }, {
-	name: 'Sencha Ext JS',
+	name: 'Sencha ExtJS',
 	url: 'https://vk.com/sencha_extjs'
 }];
 
