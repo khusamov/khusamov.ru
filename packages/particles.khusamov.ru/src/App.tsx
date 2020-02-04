@@ -30,7 +30,7 @@ const blogs = [{
 }];
 
 const footerStyle: CSSProperties = {
-	position: 'absolute',
+	position: 'fixed',
 	bottom: 0,
 	left: 0,
 	padding: '8px 15px',
