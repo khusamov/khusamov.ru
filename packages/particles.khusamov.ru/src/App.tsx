@@ -4,6 +4,7 @@ import Particles, {IParticlesParams} from 'react-particles-js';
 import config from './particlesjs-config.json';
 import Helmet from 'react-helmet';
 import packageJson from '../package.json';
+import GithubRepos from './components/GithubRepos';
 
 const blogs = [{
 	name: 'Поселок Радужный',
@@ -66,7 +67,11 @@ export default class App extends Component {
 
 				<br/>
 				<div>Мои микроблоги:</div>
-				{blogs.map(blog => <div><a href={blog.url} target='_blank'>{blog.name}</a></div>)}
+				{blogs.map((blog, index) => <div key={index}><a href={blog.url} target='_blank'>{blog.name}</a></div>)}
+
+				<br/>
+				<div>Мои репозитории:</div>
+				<GithubRepos/>
 
 				<div style={footerStyle}>Версия сайта {packageJson.version}</div>
 			</div>
