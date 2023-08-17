@@ -1,0 +1,26 @@
+/*
+https://github.com/timlrx/rehype-prism-plus
+ */
+
+.line-number::before {
+    display: inline-block;
+    width: 1rem;
+    text-align: right;
+    margin-right: 16px;
+    margin-left: -8px;
+    color: rgb(156, 163, 175); /* Line number color */
+    content: attr(line);
+}
+
+code[class*="language-"],
+pre[class*="language-"] {
+    background: transparent;
+    color: black;
+    -moz-tab-size: 3;
+    -o-tab-size: 3;
+    tab-size: 3;
+}
+
+pre[class*="language-"] {
+    font-size: 80%;
+}

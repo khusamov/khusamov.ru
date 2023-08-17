@@ -1,6 +1,13 @@
 .idea
-temp
+.yarn
+.next
+.pnp.js
+.pnp
+.env*.local
 node_modules
-yarn-error.log
-lerna-debug.log
-dist
+temp
+build
+out
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
