@@ -1,7 +1,7 @@
 import {getArticleInfoList} from '@/functions/getArticleInfoList'
 import Link from 'next/link'
 
-export default async function Home() {
+export default async function Page() {
 	const articleInfoList = await getArticleInfoList()
 	return (
 		<main>
