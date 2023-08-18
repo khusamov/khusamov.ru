@@ -1,12 +1,14 @@
 'use client'
-import Button from '@mui/joy/Button'
+import React from 'react'
+import {IconButton} from '@mui/joy'
 import {useColorScheme} from '@mui/joy/styles'
-import * as React from 'react'
+import {LightMode, DarkMode} from '@mui/icons-material'
 
 /**
  * Внимание, без функции getInitColorSchemeScript() кнопка ModeToggle не работает.
  * @link https://mui.com/joy-ui/main-features/dark-mode-optimization/
  * @link https://mui.com/joy-ui/getting-started/tutorial/
+ * @link https://mui.com/material-ui/material-icons/
  */
 export function ModeToggle() {
 	const {mode, setMode} = useColorScheme()
@@ -19,15 +21,11 @@ export function ModeToggle() {
 		return null
 	}
 
-	const onClick = () => {
-		setMode(mode === 'light' ? 'dark' : 'light')
-	}
-
-	const caption = mode === 'light' ? 'Темнее' : 'Светлее'
+	const onClick = () => setMode(mode === 'light' ? 'dark' : 'light')
 
 	return (
-		<Button variant="soft" onClick={onClick}>
-			{caption}
-		</Button>
+		<IconButton variant="soft" onClick={onClick}>
+			{mode === 'light' ? <DarkMode/> : <LightMode/>}
+		</IconButton>
 	)
 }
