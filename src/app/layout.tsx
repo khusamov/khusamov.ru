@@ -1,7 +1,11 @@
-import type {Metadata} from 'next'
-import 'prism-themes/themes/prism-one-light.css' // https://github.com/timlrx/rehype-prism-plus
-import '@/styles/rehype-prism-plus.css'
+'use client'
+import {ModeToggle} from '@/components/ModeToggle'
+import {CssBaseline, CssVarsProvider, getInitColorSchemeScript} from '@mui/joy'
 import React from 'react'
+import type {Metadata} from 'next'
+import '@/styles/rehype-prism-plus.css'
+import 'prism-themes/themes/prism-one-light.css' // https://github.com/timlrx/rehype-prism-plus
+import '@fontsource/inter'
 
 export const metadata: Metadata = {
 	title: 'khusamov.ru',
@@ -14,9 +18,14 @@ interface ILayoutProps {
 
 export default function Layout({children}: ILayoutProps) {
 	return (
-		<html lang="ru">
+		<html lang='ru'>
 			<body>
-				{children}
+				<CssVarsProvider defaultMode='system'>
+					<CssBaseline/>
+					<ModeToggle/>
+					{getInitColorSchemeScript()}
+					{children}
+				</CssVarsProvider>
 			</body>
 		</html>
 	)
