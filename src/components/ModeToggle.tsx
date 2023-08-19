@@ -1,8 +1,9 @@
 'use client'
+import {useMounted} from '@/hooks/useMounted'
 import React from 'react'
 import {IconButton} from '@mui/joy'
 import {useColorScheme} from '@mui/joy/styles'
-import {LightMode, DarkMode} from '@mui/icons-material'
+import {LightMode, DarkMode, Monitor} from '@mui/icons-material'
 
 /**
  * Внимание, без функции getInitColorSchemeScript() кнопка ModeToggle не работает.
@@ -12,19 +13,20 @@ import {LightMode, DarkMode} from '@mui/icons-material'
  */
 export function ModeToggle() {
 	const {mode, setMode} = useColorScheme()
-	const [mounted, setMounted] = React.useState(false)
+	const [isMounted] = useMounted()
 
-	// Необходим для рендеринга на стороне сервера, поскольку режим на сервере не определен.
-	React.useEffect(() => setMounted(true), [])
-
-	if (!mounted) {
-		return null
+	if (!isMounted) {
+		return (
+			<IconButton variant='soft'>
+				<Monitor/>
+			</IconButton>
+		)
 	}
 
 	const onClick = () => setMode(mode === 'light' ? 'dark' : 'light')
 
 	return (
-		<IconButton variant="soft" onClick={onClick}>
+		<IconButton variant='soft' onClick={onClick}>
 			{mode === 'light' ? <DarkMode/> : <LightMode/>}
 		</IconButton>
 	)

@@ -1,7 +1,16 @@
+import Image from 'next/image'
+import sampleImage from './sample.jpg'
+
 export const meta = {
-	title: 'Тестовая статья 2',
+	title: 'Тестовая статья 2'
 }
 
 # {meta.title}
 
 Тестовый нормальный длинный текст типа параграф.
+
+![sample.jpg]({sampleImage})
+
+{JSON.stringify(sampleImage)}
+
+<Image src={sampleImage} width={0} height={0} unoptimized alt=''/>
