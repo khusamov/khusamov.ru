@@ -1,0 +1,42 @@
+---
+title: Тестовая статья 1 с кодом
+---
+
+Тестовый нормальный длинный текст типа параграф.
+
+```tsx
+import {readdir} from 'fs/promises'
+import Link from 'next/link'
+import {basename, extname, join} from 'path'
+
+const isMardownFilename = (filename: string): boolean => {
+	return ['.md', '.mdx'].includes(extname(filename).toLowerCase())
+}
+
+const articleListDirectory = join(process.cwd(), 'articles')
+
+export default async function Home() {
+	const fileList = await readdir(articleListDirectory)
+	const mardownList = fileList.filter(isMardownFilename)
+
+	const articleInfoList = await Promise.all(mardownList.map(async (filename) => (
+		{
+			article: await import(`../../articles/${filename}`),
+			id: basename(filename, extname(filename))
+		}
+	)))
+
+	return (
+		<main>
+			{articleInfoList.map(({article, id}) => (
+				<div>
+					<Link href={`/article/${id}`}>
+						{article.meta.title}
+					</Link>
+				</div>
+			))}
+		</main>
+	)
+}
+
+```
