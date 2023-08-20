@@ -1,4 +1,5 @@
 import {defineDocumentType, makeSource} from 'contentlayer/source-files'
+import rehypePrettyCode from 'rehype-pretty-code'
 
 export const Post = defineDocumentType(
 	() => (
@@ -41,9 +42,29 @@ export const SiteConfig = defineDocumentType(
 	)
 )
 
+// https://www.contentlayer.dev/docs/reference/source-files/make-source
 export default makeSource(
 	{
-		contentDirPath: 'data',
-		documentTypes: [Post]
+		contentDirPath: 'data2',
+		documentTypes: [Post, SiteConfig],
+
+		// https://www.contentlayer.dev/docs/sources/files/mdx
+		mdx: {
+			rehypePlugins: [
+				[
+					// https://rehype-pretty-code.netlify.app/
+					// https://github.com/atomiks/rehype-pretty-code
+					rehypePrettyCode,
+					{
+						keepBackground: false,
+						theme: {
+							// https://unpkg.com/browse/shiki@0.14.2/themes/
+							dark: 'github-dark',
+							light: 'github-light'
+						}
+					}
+				]
+			],
+		}
 	}
 )
