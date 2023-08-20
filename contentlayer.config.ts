@@ -14,7 +14,27 @@ export const Post = defineDocumentType(
 			computedFields: {
 				url: {
 					type: 'string',
-					resolve: (post) => `/data/articles/${post._raw.flattenedPath}`
+					resolve: (post) => `/${post._raw.flattenedPath}`
+				}
+			}
+		}
+	)
+)
+
+export const SiteConfig = defineDocumentType(
+	() => (
+		{
+			name: 'SiteConfig',
+			filePathPattern: `site.yaml`,
+			isSingleton: true,
+			fields: {
+				title: {
+					type: 'string',
+					required: true
+				},
+				description: {
+					type: 'string',
+					required: true
 				}
 			}
 		}

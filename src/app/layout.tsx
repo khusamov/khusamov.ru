@@ -1,6 +1,8 @@
+import {IPageProps} from '@/app/articles/[[...articlePath]]/page'
 import {ArticleContextWrapper} from '@/components/ArticleContextWrapper'
 import {HomeListItem} from '@/components/HomeListItem'
 import {Navigation} from '@/components/Navigation'
+import {importArticle} from '@/functions/importArticle'
 import React from 'react'
 import type {Metadata} from 'next'
 import {getArticleInfo} from '@/functions/getArticleInfo'
@@ -9,10 +11,13 @@ import {JoyRoot} from '@/components/JoyRoot'
 // import '@/styles/rehype-prism-plus.css'
 import '@/styles/rehype-pretty-code.css' // https://rehype-pretty-code.netlify.app/
 import '@/styles/globals.css'
+import {siteConfig} from 'contentlayer/generated'
 
-export const metadata: Metadata = {
-	title: 'khusamov.ru',
-	description: 'Личный сайт веб-разработчика'
+export async function generateMetadata(): Promise<Metadata> {
+	return {
+		title: siteConfig.title,
+		description: siteConfig.description
+	}
 }
 
 interface ILayoutProps {
