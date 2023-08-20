@@ -1,20 +1,10 @@
-'use client'
-import {useArticleContext} from '@/context/ArticleContext'
-import {getArticleInfoList} from '@/functions/getArticleInfoList'
-import Link from 'next/link'
+import {importArticle} from '@/functions/importArticle'
 
-export default function Page() {
-	// const articleInfoList = await getArticleInfoList()
-	const articleInfoList = useArticleContext()
+export default async function Page() {
+	const Article = (await importArticle('_index')).default
 	return (
 		<main>
-			{articleInfoList.map(({meta, id}, index) => (
-				<div key={index}>
-					<Link href={`/articles/${id}`}>
-						{meta.title as string}
-					</Link>
-				</div>
-			))}
+			<Article/>
 		</main>
 	)
 }

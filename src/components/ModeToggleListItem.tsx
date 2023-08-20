@@ -1,9 +1,11 @@
 'use client'
 import {useMounted} from '@/hooks/useMounted'
-import React from 'react'
-import {IconButton} from '@mui/joy'
+import {DarkMode, LightMode, Monitor} from '@mui/icons-material'
+import {ListItem, ListItemButton, ListItemProps} from '@mui/joy'
 import {useColorScheme} from '@mui/joy/styles'
-import {LightMode, DarkMode, Monitor} from '@mui/icons-material'
+import React from 'react'
+
+interface IModeToggleButtonProps extends ListItemProps {}
 
 /**
  * Внимание, без функции getInitColorSchemeScript() кнопка ModeToggle не работает.
@@ -11,23 +13,27 @@ import {LightMode, DarkMode, Monitor} from '@mui/icons-material'
  * @link https://mui.com/joy-ui/getting-started/tutorial/
  * @link https://mui.com/material-ui/material-icons/
  */
-export function ModeToggle() {
+export function ModeToggleListItem(props: IModeToggleButtonProps) {
 	const {mode, setMode} = useColorScheme()
 	const [isMounted] = useMounted()
 
 	if (!isMounted) {
 		return (
-			<IconButton variant='soft'>
-				<Monitor/>
-			</IconButton>
+			<ListItem {...props}>
+				<ListItemButton>
+					<Monitor/>
+				</ListItemButton>
+			</ListItem>
 		)
 	}
 
 	const onClick = () => setMode(mode === 'light' ? 'dark' : 'light')
 
 	return (
-		<IconButton variant='soft' onClick={onClick}>
-			{mode === 'light' ? <DarkMode/> : <LightMode/>}
-		</IconButton>
+		<ListItem {...props}>
+			<ListItemButton onClick={onClick}>
+				{mode === 'light' ? <DarkMode/> : <LightMode/>}
+			</ListItemButton>
+		</ListItem>
 	)
 }

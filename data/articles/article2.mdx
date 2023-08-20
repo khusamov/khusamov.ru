@@ -1,4 +1,4 @@
-import Image from 'next/image'
+import {Picture} from '../../src/components/Picture'
 import sampleImage from './sample.jpg'
 
 export const meta = {
@@ -9,8 +9,6 @@ export const meta = {
 
 Тестовый нормальный длинный текст типа параграф.
 
-![sample.jpg]({sampleImage})
+<Picture src={sampleImage} title='fdsfsdf'/>
 
-{JSON.stringify(sampleImage)}
-
-<Image src={sampleImage} width={0} height={0} unoptimized alt=''/>
+[article1.mdx](article1)

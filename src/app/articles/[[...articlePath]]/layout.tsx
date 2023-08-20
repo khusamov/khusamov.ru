@@ -1,5 +1,5 @@
 import {ArticleIndex} from '@/components/ArticleIndex'
-import {ModeToggle} from '@/components/ModeToggle'
+import {ModeToggleListItem} from '@/components/ModeToggleListItem'
 import {Box} from '@mui/joy'
 import React from 'react'
 import {IPageProps} from './page'
@@ -14,7 +14,6 @@ export default function Layout({children, params: {articlePath = []}}: ILayoutPr
 	return (
 		<Box sx={{display: 'flex', minHeight: '100dvh'}}>
 			<Box sx={{width: 300, backgroundColor: 'cyan'}}>
-				<ModeToggle/>
 				<ArticleIndex activeArticlePath={activeArticlePath}/>
 			</Box>
 			<Box sx={{flex: 1, overflow: 'auto'}}>

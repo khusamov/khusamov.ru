@@ -7,8 +7,12 @@ interface IArticleContextWrapperProps extends PropsWithChildren {
 	articleInfoList: IArticleInfo[]
 }
 
-export const ArticleContextWrapper = ({children, articleInfoList}: IArticleContextWrapperProps) => (
-	<ArticleProvider value={articleInfoList}>
-		{children}
-	</ArticleProvider>
+export const ArticleContextWrapper = (
+	({children, articleInfoList}: IArticleContextWrapperProps) => {
+		return (
+			<ArticleProvider value={articleInfoList}>
+				{children}
+			</ArticleProvider>
+		)
+	}
 )

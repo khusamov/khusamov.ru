@@ -2,6 +2,7 @@
 import {useArticleContext} from '@/context/ArticleContext'
 import {List, ListItem, ListItemButton} from '@mui/joy'
 import Link from 'next/link'
+import {useRouter} from 'next/navigation'
 import React from 'react'
 
 interface IArticleIndexProps {
@@ -9,22 +10,21 @@ interface IArticleIndexProps {
 }
 
 export function ArticleIndex({activeArticlePath}: IArticleIndexProps) {
-	const articleInfoList = useArticleContext().filter(({id}) => id !== '_index')
+	const router = useRouter()
+	const articleInfoList = useArticleContext().filter(({articlePath}) => articlePath !== '_index')
+	const getOnClick = (articlePath: string) => () => {
+		if (activeArticlePath !== articlePath) {
+			router.push(`/articles/${articlePath}`)
+		}
+	}
 	return (
 		<List>
 			{
 				articleInfoList.map(
-					({meta, id}, index) => (
+					({meta, articlePath}, index) => (
 						<ListItem key={index}>
-							<ListItemButton>
-								{activeArticlePath === id && (
-									meta.title as string
-								)}
-								{activeArticlePath !== id && (
-									<Link href={`/articles/${id}`}>
-										{meta.title as string}
-									</Link>
-								)}
+							<ListItemButton onClick={getOnClick(articlePath)} selected={activeArticlePath === articlePath}>
+								{meta.title as string}
 							</ListItemButton>
 						</ListItem>
 					)

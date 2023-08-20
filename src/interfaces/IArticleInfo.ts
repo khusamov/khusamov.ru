@@ -1,6 +1,7 @@
 import {IArticleMeta} from '@/interfaces/IArticleMeta'
 
 export interface IArticleInfo {
-	id: string
+	articlePath: string
 	meta: IArticleMeta
+	children: IArticleInfo[]
 }
