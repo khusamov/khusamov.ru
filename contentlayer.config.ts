@@ -1,5 +1,6 @@
 import {defineDocumentType, makeSource} from 'contentlayer/source-files'
 import rehypePrettyCode from 'rehype-pretty-code'
+import remarkMdxImages from 'remark-mdx-images'
 
 export const Post = defineDocumentType(
 	() => (
@@ -66,6 +67,26 @@ export default makeSource(
 					}
 				]
 			],
+			remarkPlugins: [
+				remarkMdxImages
+			],
+
+			/**
+			 * Встраивание изображений в contentlayer не реализовано. Обсуждение см. на странице https://github.com/contentlayerdev/contentlayer/issues/11
+			 * Сейчас изображения встраиваются в страницу (опция dataurl). Но можно сохранять и в файл (опция file).
+			 * @link https://github.com/kentcdodds/mdx-bundler#image-bundling
+			 * @param options
+			 * @returns {any}
+			 */
+			esbuildOptions: options => {
+				// Set the `outdir` to a public location for this bundle.
+				// options.outdir = '/users/you/site/public/img/about' // Не ясно относительно чего указывать путь.
+				options.loader = {
+					...options.loader,
+					'.jpg': 'dataurl'
+				}
+				return options
+			}
 		}
 	}
 )
