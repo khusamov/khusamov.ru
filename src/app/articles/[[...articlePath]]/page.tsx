@@ -1,5 +1,6 @@
 import {getArticleInfo} from '@/functions/getArticleInfo'
 import {importArticle} from '@/functions/importArticle'
+import {IArticleInfo} from '@/interfaces/IArticleInfo'
 import type {Metadata} from 'next'
 import dynamic from 'next/dynamic'
 
@@ -15,14 +16,16 @@ export async function generateMetadata({params: {articlePath = ['_index']}}: IPa
 }
 
 export async function generateStaticParams(): Promise<Array<IPageProps['params']>> {
-	const articleInfoList = await getArticleInfo()
-	const staticParams: Array<IPageProps['params']> = (
-		articleInfoList.children.map(
-			({articlePath}) => ({
-				articlePath: [articlePath]
-			})
-		)
-	)
+	const rootArticleInfo = await getArticleInfo()
+
+	function extract(articleInfo: IArticleInfo): string[] {
+		return [articleInfo.articlePath, ...articleInfo.children.flatMap(item => extract(item))]
+	}
+
+	const staticParams: Array<IPageProps['params']> = extract(rootArticleInfo).map(articlePath => ({
+		articlePath: articlePath.split('/')
+	}))
+
 	staticParams.push({})
 	return staticParams
 }
