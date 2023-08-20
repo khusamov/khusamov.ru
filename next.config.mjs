@@ -53,7 +53,6 @@ const nextConfig = {
 		//mdxRs: false // В настоящее время mdxRs не поддерживает плагины rehypePlugins. https://github.com/vercel/next.js/issues/46659
 	},
 	output: 'export',
-	distDir: 'build',
 }
 
 export default withMDX(nextConfig)
