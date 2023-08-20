@@ -1,10 +1,16 @@
-import {importArticle} from '@/functions/importArticle'
+import {useMDXComponent} from 'next-contentlayer/hooks'
+import {allPosts, Post} from 'contentlayer/generated'
 
-export default async function Page() {
-	const Article = (await importArticle('_index')).default
+export default async function() {
+	const rootPost = allPosts.find(post => post.url === '/articles/_index')
 	return (
 		<main>
-			<Article/>
+			{rootPost && <PostComponent post={rootPost}/>}
 		</main>
 	)
+}
+
+function PostComponent({post}: {post: Post}) {
+	const Post = useMDXComponent(post.body.code)
+	return <Post/>
 }
