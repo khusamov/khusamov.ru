@@ -90,7 +90,7 @@ const mdx: MDXOptions = {
 export default makeSource(
 	{
 		mdx,
-		contentDirPath: 'data2',
+		contentDirPath: 'content',
 		documentTypes: [Post, SiteConfig]
 	}
 )
