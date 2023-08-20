@@ -1,11 +1,25 @@
 // @ts-check
 
 import nextMdx from '@next/mdx'
+import {withContentlayer}  from 'next-contentlayer'
 import rehypePrettyCode from 'rehype-pretty-code'
 // import rehypeHighlight from 'rehype-highlight'
 // import typescript from 'highlight.js/lib/languages/typescript.js'
 // import rehypePrism from '@mapbox/rehype-prism'
 // import rehypePrism from 'rehype-prism-plus'
+
+/**
+ * Pipe Operator (|>) for JavaScript
+ * @link https://habr.com/ru/companies/timeweb/articles/713768/
+ * @param fns
+ * @returns {*}
+ */
+const pipe = (...fns) =>
+	fns.reduce(
+		(prevFn, nextFn) =>
+			(...args) =>
+				nextFn(prevFn(...args))
+	)
 
 /**
  * @link https://nextjs.org/docs/pages/building-your-application/configuring/mdx
@@ -44,6 +58,7 @@ const withMDX = nextMdx({
 	}
 })
 
+const withPipe = pipe(withContentlayer, withMDX)
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -55,4 +70,4 @@ const nextConfig = {
 	output: 'export',
 }
 
-export default withMDX(nextConfig)
+export default withPipe(nextConfig)

@@ -4,6 +4,7 @@
 .pnp.js
 .pnp
 .env*.local
+.contentlayer
 node_modules
 temp
 build
