@@ -1,7 +1,21 @@
 import {MDXOptions} from '@contentlayer/core'
-import {defineDocumentType, makeSource} from 'contentlayer/source-files'
+import {defineDocumentType, makeSource, FieldDefs} from 'contentlayer/source-files'
 import rehypePrettyCode from 'rehype-pretty-code'
 import remarkMdxImages from 'remark-mdx-images'
+
+const indexRouteSegment = '_index'
+
+const postFields: FieldDefs = {
+	priority: {
+		type: 'number',
+		required: true,
+		default: 0
+	},
+	title: {
+		type: 'string',
+		required: true
+	}
+}
 
 export const SiteConfig = defineDocumentType(
 	() => (
@@ -23,22 +37,37 @@ export const SiteConfig = defineDocumentType(
 	)
 )
 
+export const WelcomePost = defineDocumentType(
+	() => (
+		{
+			name: 'WelcomePost',
+			filePathPattern: `welcome.mdx`,
+			contentType: 'mdx',
+			isSingleton: true,
+			fields: postFields
+		}
+	)
+)
+
 export const Post = defineDocumentType(
 	() => (
 		{
 			name: 'Post',
-			filePathPattern: `articles/**/*.mdx`,
+			filePathPattern: `posts/**/*.mdx`,
 			contentType: 'mdx',
-			fields: {
-				title: {
-					type: 'string',
-					required: false
-				}
-			},
+			fields: postFields,
 			computedFields: {
 				url: {
 					type: 'string',
-					resolve: (post) => `/${post._raw.flattenedPath}`
+					resolve: post => `/${post._raw.flattenedPath.replace(`/${indexRouteSegment}`, '')}`
+				},
+				level: {
+					type: 'number',
+					resolve: post => post._raw.flattenedPath.split('/').length - 3
+				},
+				isSection: {
+					type: 'boolean',
+					resolve: post => post._raw.sourceFileName.startsWith(indexRouteSegment)
 				}
 			}
 		}
@@ -91,6 +120,6 @@ export default makeSource(
 	{
 		mdx,
 		contentDirPath: 'content',
-		documentTypes: [Post, SiteConfig]
+		documentTypes: [SiteConfig, WelcomePost, Post]
 	}
 )

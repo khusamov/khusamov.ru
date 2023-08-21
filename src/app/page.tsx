@@ -1,17 +1,16 @@
 import {Picture} from '@/components/Picture'
 import {useMDXComponent} from 'next-contentlayer/hooks'
-import {allPosts, Post} from 'contentlayer/generated'
+import {welcomePost, WelcomePost} from 'contentlayer/generated'
 
 export default async function() {
-	const rootPost = allPosts.find(post => post.url === '/articles/_index')
 	return (
 		<main>
-			{rootPost && <PostComponent post={rootPost}/>}
+			<PostComponent post={welcomePost}/>
 		</main>
 	)
 }
 
-function PostComponent({post}: {post: Post}) {
+function PostComponent({post}: {post: WelcomePost}) {
 	const Post = useMDXComponent(post.body.code)
 	return <Post components={{Picture: Picture}}/>
 }
