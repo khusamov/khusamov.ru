@@ -6,31 +6,36 @@ import dynamic from 'next/dynamic'
 
 export interface IPageProps {
 	params: {
-		articlePath?: string[]
+		id?: string[]
 	}
 }
 
-export async function generateMetadata({params: {articlePath = ['_index']}}: IPageProps): Promise<Metadata> {
-	const {meta} = await importArticle(articlePath.join('/'))
-	return meta
-}
+// export async function generateMetadata({params: {id = ['_index']}}: IPageProps): Promise<Metadata> {
+// 	const {meta} = await importArticle(id.join('/'))
+// 	return meta
+// }
 
-export async function generateStaticParams(): Promise<Array<IPageProps['params']>> {
-	const rootArticleInfo = await getArticleInfo()
+// export async function generateStaticParams(): Promise<Array<IPageProps['params']>> {
+// 	const rootArticleInfo = await getArticleInfo()
+//
+// 	function extract(articleInfo: IArticleInfo): string[] {
+// 		return [articleInfo.articlePath, ...articleInfo.children.flatMap(item => extract(item))]
+// 	}
+//
+// 	const staticParams: Array<IPageProps['params']> = extract(rootArticleInfo).map(articlePath => ({
+// 		id: articlePath.split('/')
+// 	}))
+//
+// 	staticParams.push({})
+// 	return staticParams
+// }
 
-	function extract(articleInfo: IArticleInfo): string[] {
-		return [articleInfo.articlePath, ...articleInfo.children.flatMap(item => extract(item))]
-	}
+// export default function Page({params: {id = ['_index']}}: IPageProps) {
+// 	//const Article = dynamic(() => importArticle(id.join('/')))
+// 	return null
+// }
 
-	const staticParams: Array<IPageProps['params']> = extract(rootArticleInfo).map(articlePath => ({
-		articlePath: articlePath.split('/')
-	}))
-
-	staticParams.push({})
-	return staticParams
-}
-
-export default function Page({params: {articlePath = ['_index']}}: IPageProps) {
-	const Article = dynamic(() => importArticle(articlePath.join('/')))
-	return <Article/>
+export default function Page() {
+	//const Article = dynamic(() => importArticle(id.join('/')))
+	return null
 }

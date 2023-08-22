@@ -63,7 +63,7 @@ export const Post = defineDocumentType(
 				},
 				level: {
 					type: 'number',
-					resolve: post => post._raw.flattenedPath.split('/').length - 3
+					resolve: post => post._raw.flattenedPath.replace(`/${indexRouteSegment}`, '').split('/').length - 1
 				},
 				isSection: {
 					type: 'boolean',

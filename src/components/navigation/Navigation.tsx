@@ -1,4 +1,3 @@
-'use client'
 import {HomeListItem} from '@/components/HomeListItem'
 import {ModeToggleListItem} from '@/components/ModeToggleListItem'
 import {INavigationItem} from '@/components/navigation/INavigationItem'

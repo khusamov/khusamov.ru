@@ -1,7 +1,9 @@
+'use client'
 import {INavigationItem} from '@/components/navigation/INavigationItem'
+import {useActiveUrl} from '@/components/navigation/useActiveUrl'
 import {ListItem, ListItemButton} from '@mui/joy'
 import {SxProps} from '@mui/joy/styles/types'
-import {useRouter, useSelectedLayoutSegments} from 'next/navigation'
+import {useRouter} from 'next/navigation'
 import React, {MouseEvent} from 'react'
 
 interface INavigationListItemsProps {
@@ -9,6 +11,7 @@ interface INavigationListItemsProps {
 
 	/**
 	 * Включить или выключить выравнивание меню разделов по центру.
+	 * @default false
 	 * @type {boolean}
 	 */
 	centered?: boolean
@@ -20,12 +23,7 @@ const sxForCentered: SxProps = {
 	marginInlineStart: 'auto'
 }
 
-function useActiveUrl(): string {
-	const selectedSegments = useSelectedLayoutSegments()
-	return '/' + selectedSegments.join('/')
-}
-
-export function NavigationListItems({items, centered}: INavigationListItemsProps) {
+export function NavigationListItems({items, centered = false}: INavigationListItemsProps) {
 	const router = useRouter()
 	const activeUrl = useActiveUrl()
 	const createOnClickHandler = (
