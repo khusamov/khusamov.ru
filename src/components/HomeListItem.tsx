@@ -1,19 +1,19 @@
 'use client'
 import React, {MouseEvent} from 'react'
 import {Home} from '@mui/icons-material'
-import {ListItem, ListItemButton, ListItemContent, ListItemDecorator, Typography} from '@mui/joy'
+import {ListItem, ListItemButton, ListItemContent, ListItemDecorator, ListItemProps} from '@mui/joy'
 
 // https://nextjs.org/docs/app/api-reference/functions/use-selected-layout-segment
 import {useRouter, useSelectedLayoutSegments} from 'next/navigation'
 
 const url = '/'
 
-interface IRootLinkProps {
+interface IRootLinkProps extends ListItemProps {
 	label?: string
 	logo?: string
 }
 
-export const HomeListItem = ({logo = 'Khusamov.ru'}: IRootLinkProps) => {
+export const HomeListItem = ({logo = 'Khusamov.ru', ...rest}: IRootLinkProps) => {
 	const router = useRouter()
 	const segments = useSelectedLayoutSegments()
 
@@ -27,7 +27,7 @@ export const HomeListItem = ({logo = 'Khusamov.ru'}: IRootLinkProps) => {
 	}
 
 	return (
-		<ListItem>
+		<ListItem {...rest}>
 			<ListItemButton selected={isActive} onClick={onClick} component='a' href={url}>
 				<ListItemDecorator>
 					<Home/>

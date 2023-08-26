@@ -4,6 +4,8 @@ import {ModeToggleListItem} from '@/components/ModeToggleListItem'
 import {INavigationItem} from '@/components/navigation/INavigationItem'
 import {NavigationListItems} from '@/components/navigation/NavigationListItems'
 import {Box, List, ListDivider} from '@mui/joy'
+import {Theme} from '@mui/joy/styles/types/theme'
+import {SxProps} from '@mui/system/styleFunctionSx'
 import React from 'react'
 
 interface INavigationProps {
@@ -17,8 +19,14 @@ interface INavigationProps {
 }
 
 export function Navigation({items, centered = true}: INavigationProps) {
+	const sx: SxProps<Theme> = theme => ({
+		zIndex: theme.zIndex.tooltip - 1,
+		p: 1,
+		borderBottom: '0px solid silver',
+		boxShadow: 'lg'
+	})
 	return (
-		<Box sx={{p: 1, borderBottom: '1px solid silver'}}>
+		<Box sx={sx}>
 			<List orientation='horizontal'>
 				<HomeListItem/>
 				{!centered && <ListDivider inset='gutter'/>}

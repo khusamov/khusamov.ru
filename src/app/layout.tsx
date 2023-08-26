@@ -1,7 +1,6 @@
 import {JoyRoot} from '@/components/JoyRoot'
 import {INavigationItem} from '@/components/navigation/INavigationItem'
 import {Navigation} from '@/components/navigation/Navigation'
-import {PostIndex} from '@/components/navigation/post-index/PostIndex'
 import {getWelcomePost} from '@/functions/getWelcomePost'
 import {Box} from '@mui/joy'
 import React, {PropsWithChildren} from 'react'
