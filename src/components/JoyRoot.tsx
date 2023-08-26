@@ -1,29 +1,12 @@
 'use client'
+import {defaultMode, theme} from '@/constants/theme'
 import React, {PropsWithChildren} from 'react'
-import type {Mode} from '@mui/system/cssVars/useCurrentColorScheme'
-import {CssBaseline, CssVarsProvider, extendTheme, getInitColorSchemeScript, StyledEngineProvider} from '@mui/joy'
+import {CssBaseline, CssVarsProvider, getInitColorSchemeScript} from '@mui/joy'
 import '@fontsource/inter'
-
-const defaultMode: Mode = 'system'
-
-/**
- * @link https://mui.com/joy-ui/customization/theme-colors/
- */
-const theme = extendTheme({
-	colorSchemes: {
-		light: {
-			palette: {
-				background: {
-					body: 'white'
-				}
-			}
-		}
-	}
-})
 
 export const JoyRoot = ({children}: PropsWithChildren) => {
 	return (
-		<CssVarsProvider theme={theme} defaultMode={defaultMode}>
+		<CssVarsProvider defaultMode={defaultMode} theme={theme}>
 			<CssBaseline/>
 			{getInitColorSchemeScript({defaultMode})}
 			{children}

@@ -1,8 +1,9 @@
+import {PostIndexLayout} from '@/app/posts/PostIndexLayout'
 import {INavigationItem} from '@/components/navigation/INavigationItem'
-import {PostIndex} from '@/components/navigation/post-index/PostIndex'
-import {Box} from '@mui/joy'
+import {Theme} from '@mui/joy/styles/types/theme'
+import {SxProps} from '@mui/system/styleFunctionSx'
 import {allPosts} from 'contentlayer/generated'
-import React from 'react'
+import React, {PropsWithChildren} from 'react'
 
 const navigationItems: INavigationItem[] = (
 	allPosts
@@ -15,19 +16,18 @@ const navigationItems: INavigationItem[] = (
 		)
 )
 
-interface ILayoutProps {
-	children: React.ReactNode
-}
+interface ILayoutProps extends PropsWithChildren {}
 
-export default function Layout({children}: ILayoutProps) {
+export default function({children}: ILayoutProps) {
+	const sx: SxProps<Theme> = theme => {
+		return {
+			width: 300,
+			backgroundColor: theme.palette.mode === 'light' ? 'magenta' : 'cyan'
+		}
+	}
 	return (
-		<Box sx={{display: 'flex', minHeight: '100dvh'}}>
-			<Box sx={{width: 300, backgroundColor: 'cyan'}}>
-				<PostIndex items={navigationItems}/>
-			</Box>
-			<Box sx={{flex: 1, overflow: 'auto'}}>
-				<article>{children}</article>
-			</Box>
-		</Box>
+		<PostIndexLayout navigationItems={navigationItems}>
+			{children}
+		</PostIndexLayout>
 	)
 }

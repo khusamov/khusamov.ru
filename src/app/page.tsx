@@ -5,15 +5,15 @@ import {Post} from 'contentlayer/generated'
 
 const welcomePost: Post = getWelcomePost()
 
+function PostComponent({post}: {post: Post}) {
+	const Post = useMDXComponent(post.body.code)
+	return <Post components={{Picture: Picture}}/>
+}
+
 export default async function() {
 	return (
 		<main>
 			<PostComponent post={welcomePost}/>
 		</main>
 	)
-}
-
-function PostComponent({post}: {post: Post}) {
-	const Post = useMDXComponent(post.body.code)
-	return <Post components={{Picture: Picture}}/>
 }

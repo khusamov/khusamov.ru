@@ -42,7 +42,7 @@ export function NavigationListItems({items, centered = false}: INavigationListIt
 					: {}
 			)
 			const onClick = createOnClickHandler(url)
-			const selected = activeUrl === url
+			const selected = activeUrl.startsWith(url)
 			return (
 				<ListItem key={url} sx={sx}>
 					<ListItemButton selected={selected} onClick={onClick} component='a' href={url}>

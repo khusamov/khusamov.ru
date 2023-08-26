@@ -1,7 +1,9 @@
 import {JoyRoot} from '@/components/JoyRoot'
 import {INavigationItem} from '@/components/navigation/INavigationItem'
 import {Navigation} from '@/components/navigation/Navigation'
+import {PostIndex} from '@/components/navigation/post-index/PostIndex'
 import {getWelcomePost} from '@/functions/getWelcomePost'
+import {Box} from '@mui/joy'
 import React, {PropsWithChildren} from 'react'
 import type {Metadata} from 'next'
 import {allPosts, Post} from 'contentlayer/generated'
@@ -35,8 +37,12 @@ export default async function({children}: PropsWithChildren) {
 		<html lang='ru'>
 			<body>
 				<JoyRoot>
-					<Navigation items={navigationItems}/>
-					{children}
+					<Box sx={{display: 'flex', flexFlow: 'column', height: '100%'}}>
+						<Navigation items={navigationItems}/>
+						<Box sx={{flex: 1, overflow: 'auto'}}>
+							{children}
+						</Box>
+					</Box>
 				</JoyRoot>
 			</body>
 		</html>

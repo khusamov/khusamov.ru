@@ -1,6 +1,8 @@
+import {Typography} from '@mui/joy'
 import {allPosts} from 'contentlayer/generated'
 import type {Metadata} from 'next'
 import {useMDXComponent} from 'next-contentlayer/hooks'
+import {Fragment} from 'react'
 
 const prefixSection = 'posts'
 
@@ -18,7 +20,7 @@ export interface IPageProps {
 	}
 }
 
-export async function generateMetadata({params: {id}}: IPageProps): Promise<Metadata> {
+export function generateMetadata({params: {id}}: IPageProps): Metadata {
 	const post = getPost(id)
 	return {
 		title: post.title,
@@ -26,16 +28,23 @@ export async function generateMetadata({params: {id}}: IPageProps): Promise<Meta
 	}
 }
 
-export async function generateStaticParams(): Promise<Array<IPageProps['params']>> {
+export function generateStaticParams(): Array<IPageProps['params']> {
 	return (
-		allPosts.map(post => ({
-			id: post.url.split('/').filter(item => item !== prefixSection)
-		}))
+		allPosts.map(
+			post => ({
+				id: post.url.split('/').filter(item => item !== prefixSection)
+			})
+		)
 	)
 }
 
-export default function Page({params: {id}}: IPageProps) {
+export default function({params: {id}}: IPageProps) {
 	const post = getPost(id)
 	const Post = useMDXComponent(post.body.code)
-	return <Post/>
+	return (
+		<Fragment>
+			<Typography level='h1' color='primary'>{post.title}</Typography>
+			<Post/>
+		</Fragment>
+	)
 }
