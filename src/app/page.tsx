@@ -1,6 +1,9 @@
 import {Picture} from '@/components/Picture'
+import {getWelcomePost} from '@/functions/getWelcomePost'
 import {useMDXComponent} from 'next-contentlayer/hooks'
-import {welcomePost, WelcomePost} from 'contentlayer/generated'
+import {Post} from 'contentlayer/generated'
+
+const welcomePost: Post = getWelcomePost()
 
 export default async function() {
 	return (
@@ -10,7 +13,7 @@ export default async function() {
 	)
 }
 
-function PostComponent({post}: {post: WelcomePost}) {
+function PostComponent({post}: {post: Post}) {
 	const Post = useMDXComponent(post.body.code)
 	return <Post components={{Picture: Picture}}/>
 }

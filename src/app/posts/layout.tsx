@@ -3,11 +3,10 @@ import {PostIndex} from '@/components/navigation/post-index/PostIndex'
 import {Box} from '@mui/joy'
 import {allPosts} from 'contentlayer/generated'
 import React from 'react'
-import {IPageProps} from './page'
 
 const navigationItems: INavigationItem[] = (
 	allPosts
-		.filter(post => post.level === 2)
+		.filter(post => post.level === 3)
 		.map(
 			post => ({
 				title: post.title,
@@ -18,12 +17,9 @@ const navigationItems: INavigationItem[] = (
 
 interface ILayoutProps {
 	children: React.ReactNode
-	params: IPageProps['params']
 }
 
-export default function Layout({children, params: {id = []}}: ILayoutProps) {
-	const activeArticlePath = id.join('/')
-
+export default function Layout({children}: ILayoutProps) {
 	return (
 		<Box sx={{display: 'flex', minHeight: '100dvh'}}>
 			<Box sx={{width: 300, backgroundColor: 'cyan'}}>

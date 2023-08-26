@@ -1,78 +1,43 @@
 import {MDXOptions} from '@contentlayer/core'
-import {defineDocumentType, makeSource, FieldDefs} from 'contentlayer/source-files'
+import {defineDocumentType, makeSource, DocumentTypeDef} from 'contentlayer/source-files'
 import rehypePrettyCode from 'rehype-pretty-code'
 import remarkMdxImages from 'remark-mdx-images'
 
 const indexRouteSegment = '_index'
 
-const postFields: FieldDefs = {
-	priority: {
-		type: 'number',
-		required: true,
-		default: 0
+const postTypeDef: DocumentTypeDef = {
+	name: 'Post',
+	filePathPattern: `**/*.mdx`,
+	contentType: 'mdx',
+	fields: {
+		title: {
+			type: 'string',
+			required: true
+		},
+		description: {
+			type: 'string',
+			required: false
+		},
+		date: {
+			type: 'date',
+			required: false
+		}
 	},
-	title: {
-		type: 'string',
-		required: true
+	computedFields: {
+		url: {
+			type: 'string',
+			resolve: post => `/${post._raw.flattenedPath.replace(`/${indexRouteSegment}`, '')}`
+		},
+		level: {
+			type: 'number',
+			resolve: post => post._raw.flattenedPath.replace(`/${indexRouteSegment}`, '').split('/').length
+		},
+		isIndex: {
+			type: 'boolean',
+			resolve: post => post._raw.sourceFileName.startsWith(indexRouteSegment)
+		}
 	}
 }
-
-export const SiteConfig = defineDocumentType(
-	() => (
-		{
-			name: 'SiteConfig',
-			filePathPattern: `site.yaml`,
-			isSingleton: true,
-			fields: {
-				title: {
-					type: 'string',
-					required: true
-				},
-				description: {
-					type: 'string',
-					required: true
-				}
-			}
-		}
-	)
-)
-
-export const WelcomePost = defineDocumentType(
-	() => (
-		{
-			name: 'WelcomePost',
-			filePathPattern: `welcome.mdx`,
-			contentType: 'mdx',
-			isSingleton: true,
-			fields: postFields
-		}
-	)
-)
-
-export const Post = defineDocumentType(
-	() => (
-		{
-			name: 'Post',
-			filePathPattern: `posts/**/*.mdx`,
-			contentType: 'mdx',
-			fields: postFields,
-			computedFields: {
-				url: {
-					type: 'string',
-					resolve: post => `/${post._raw.flattenedPath.replace(`/${indexRouteSegment}`, '')}`
-				},
-				level: {
-					type: 'number',
-					resolve: post => post._raw.flattenedPath.replace(`/${indexRouteSegment}`, '').split('/').length - 1
-				},
-				isSection: {
-					type: 'boolean',
-					resolve: post => post._raw.sourceFileName.startsWith(indexRouteSegment)
-				}
-			}
-		}
-	)
-)
 
 /**
  * @link https://www.contentlayer.dev/docs/sources/files/mdx
@@ -115,11 +80,13 @@ const mdx: MDXOptions = {
 	}
 }
 
+export const Post = defineDocumentType(() => postTypeDef)
+
 // https://www.contentlayer.dev/docs/reference/source-files/make-source
 export default makeSource(
 	{
 		mdx,
 		contentDirPath: 'content',
-		documentTypes: [SiteConfig, WelcomePost, Post]
+		documentTypes: [Post]
 	}
 )

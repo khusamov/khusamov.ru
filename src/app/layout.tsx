@@ -1,38 +1,34 @@
 import {JoyRoot} from '@/components/JoyRoot'
 import {INavigationItem} from '@/components/navigation/INavigationItem'
 import {Navigation} from '@/components/navigation/Navigation'
-import {PostIndex} from '@/components/navigation/post-index/PostIndex'
+import {getWelcomePost} from '@/functions/getWelcomePost'
 import React, {PropsWithChildren} from 'react'
 import type {Metadata} from 'next'
-import {allPosts, siteConfig} from 'contentlayer/generated'
-import '@/styles/globals.css'
+import {allPosts, Post} from 'contentlayer/generated'
+import '@/styles/globals.scss'
 import '@/styles/rehype-pretty-code.css' // https://rehype-pretty-code.netlify.app/
 
-// console.log(allPosts.map(post => ({
-// 	url: post.url,
-// 	title: post.title,
-// 	isSection: post.isSection,
-// 	level: post.level,
-// 	flattenedPath: post._raw.flattenedPath
-// })))
-
-const navigationItems: INavigationItem[] = (
-	allPosts
-		.filter(post => post.isSection && post.level === 1)
-		.map(
-			post => ({
-				title: post.title,
-				url: post.url
-			})
-		)
-)
+const welcomePost: Post = getWelcomePost()
 
 export async function generateMetadata(): Promise<Metadata> {
 	return {
-		title: siteConfig.title,
-		description: siteConfig.description
+		title: welcomePost.title,
+		description: welcomePost.description ?? null
 	}
 }
+
+function postToNavigationItemMap(post: Post): INavigationItem {
+	return {
+		title: post.title,
+		url: post.url
+	}
+}
+
+const navigationItems: INavigationItem[] = (
+	allPosts
+		.filter(post => post.isIndex && post.level === 2)
+		.map(postToNavigationItemMap)
+)
 
 export default async function({children}: PropsWithChildren) {
 	return (

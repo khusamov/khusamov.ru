@@ -1,10 +1,10 @@
 'use client'
 import {INavigationItem} from '@/components/navigation/INavigationItem'
-import {useActiveUrl} from '@/components/navigation/useActiveUrl'
 import {ListItem, ListItemButton} from '@mui/joy'
 import {SxProps} from '@mui/joy/styles/types'
 import {useRouter} from 'next/navigation'
 import React, {MouseEvent} from 'react'
+import {usePathname} from 'next/navigation'
 
 interface INavigationListItemsProps {
 	items: INavigationItem[]
@@ -25,7 +25,7 @@ const sxForCentered: SxProps = {
 
 export function NavigationListItems({items, centered = false}: INavigationListItemsProps) {
 	const router = useRouter()
-	const activeUrl = useActiveUrl()
+	const activeUrl = usePathname()
 	const createOnClickHandler = (
 		(url: string) => (event: MouseEvent) => {
 			event.preventDefault()
@@ -44,7 +44,7 @@ export function NavigationListItems({items, centered = false}: INavigationListIt
 			const onClick = createOnClickHandler(url)
 			const selected = activeUrl === url
 			return (
-				<ListItem key={index} sx={sx}>
+				<ListItem key={url} sx={sx}>
 					<ListItemButton selected={selected} onClick={onClick} component='a' href={url}>
 						{title}
 					</ListItemButton>
